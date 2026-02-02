@@ -7,6 +7,7 @@ import com.url.shortener.repository.UrlMappingRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -52,5 +53,11 @@ public class UrlMappingService {
             shortUrl.append(characters.charAt(random.nextInt(characters.length())));
         }
         return shortUrl.toString();
+    }
+
+    public List<UrlMappingDTO> getUrlsByUser(User user) {
+        return  urlMappingRepository.findByUser(user).stream()
+                .map(this::convertToDto)
+                .toList();
     }
 }
