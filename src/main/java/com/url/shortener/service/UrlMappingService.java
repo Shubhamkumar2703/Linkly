@@ -12,17 +12,23 @@ import java.util.Random;
 @Service
 public class UrlMappingService {
 
-    private UrlMappingRepository urlMappingRepository;
-    public UrlMappingDTO createShortUrl(String originalUrl) {
+    private final UrlMappingRepository urlMappingRepository;
+
+    public UrlMappingService(UrlMappingRepository urlMappingRepository) {
+        this.urlMappingRepository = urlMappingRepository;
+    }
+
+
+    public UrlMappingDTO createShortUrl(String originalUrl, User user) {
         String shortUrl = generateShortUrl();
         UrlMapping urlMapping = new UrlMapping();
         urlMapping.setOriginalUrl(originalUrl);
-        urlMapping.setUser(User);
+        urlMapping.setUser(user);
         urlMapping.setCreateDate(LocalDateTime.now());
         urlMapping.setShortUrl(shortUrl);
         UrlMapping savedUrlMapping = urlMappingRepository.save(urlMapping);
 
-        return convertToDto(urlMapping);
+        return convertToDto(savedUrlMapping);
     }
 
     private UrlMappingDTO convertToDto(UrlMapping urlMapping){
