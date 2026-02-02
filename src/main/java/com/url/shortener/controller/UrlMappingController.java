@@ -35,4 +35,5 @@ public class UrlMappingController {
         UrlMappingDTO urlMappingDTO = urlMappingService.createShortUrl(originalUrl, user);
         return ResponseEntity.ok(urlMappingDTO);
     }
+
 }
