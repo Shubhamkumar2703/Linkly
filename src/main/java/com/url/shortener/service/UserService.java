@@ -7,6 +7,7 @@ import com.url.shortener.repository.UserRepository;
 import com.url.shortener.security.jwt.JwtAuthenticationResponse;
 import com.url.shortener.security.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import java.net.Authenticator;
 @AllArgsConstructor
 public class UserService {
     private PasswordEncoder passwordEncoder;
+
     private UserRepository userRepository;
     private AuthenticationManager authenticationManager;
     private JwtUtils jwtUtils;
@@ -49,7 +51,7 @@ public class UserService {
 
     }
 
-    public User findByUsername(String name) {
+    public  User findByUsername(String name) {
         return userRepository.findByUsername(name).orElseThrow(
                 () -> new UsernameNotFoundException("User not Found with username: " + name)
         );

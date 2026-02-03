@@ -10,6 +10,9 @@ public class ClickEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime clickDate;
+    public LocalDateTime getClickDate(){
+        return clickDate;
+    }
 
     @ManyToOne
     @JoinColumn(name = "url_mapping_id")
