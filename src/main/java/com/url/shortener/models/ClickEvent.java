@@ -20,4 +20,5 @@ public class ClickEvent {
     @JoinColumn(name = "url_mapping_id")
     private UrlMapping urlMapping;
 
+
 }
