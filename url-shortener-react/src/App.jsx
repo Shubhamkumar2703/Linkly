@@ -6,12 +6,15 @@ import LandingPage from './components/LandingPage'
 import RegisterPage from './components/RegisterPage'  
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'    
+import { Toaster } from 'react-hot-toast'
 
 
 const App = () => {
   return (
     <>
     <BrowserRouter>
+
+    <Toaster position="top-center" />
     
     <Routes>
       <Route path='/' element={<LandingPage/>}/>
