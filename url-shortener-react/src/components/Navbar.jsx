@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useStoreContext } from "../contextApi/ContextApi";
+import { useStoreContext } from "../contextApi/ContextApi.jsx";
 import { IoIosMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";

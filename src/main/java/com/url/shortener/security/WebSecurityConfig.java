@@ -1,10 +1,11 @@
 package com.url.shortener.security;
 
 import com.url.shortener.security.jwt.JwtAuthenticationFilter;
+import com.url.shortener.security.jwt.JwtUtils;
 import com.url.shortener.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -23,9 +24,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
+    private final JwtUtils jwtUtils;
 
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, JwtUtils jwtUtils) {
         this.userDetailsService = userDetailsService;
+        this.jwtUtils = jwtUtils;
     }
 
     @Bean
@@ -55,8 +58,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/{shortUrl}").permitAll()
+                        .requestMatchers("/s/**").permitAll()
                         .requestMatchers("/api/urls/**").authenticated()
                         .anyRequest().authenticated()
                 );

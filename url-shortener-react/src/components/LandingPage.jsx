@@ -3,9 +3,12 @@ import Footer from "../components/Footer";
 import FeatureCard from "../components/FeatureCard";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useStoreContext } from "../contextApi/ContextApi.jsx";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { token } = useStoreContext();
+  console.log("Token in LandingPage:" + token);
 
   return (
     <>
