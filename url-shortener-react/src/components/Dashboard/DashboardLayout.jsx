@@ -35,10 +35,12 @@ const DashboardLayout = () => {
   } = useFetchTotalClicks(token, onError);
 
   if (graphLoading) return <Loader />;
+  <Loader />;
 
   return (
     <div>
       <Navbar />
+
     <div className="min-h-[calc(100vh-64px)] bg-slate-50 px-4 sm:px-8 lg:px-14 py-10">
       <div className="max-w-7xl mx-auto space-y-10">
 

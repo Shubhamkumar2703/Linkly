@@ -142,6 +142,7 @@ const ShortenItem = ({
           {loading ? (
             <div className="flex flex-col items-center justify-center h-full gap-2">
               <Hourglass
+                visible={true}
                 height="50"
                 width="50"
                 colors={["#6366f1", "#a5b4fc"]}

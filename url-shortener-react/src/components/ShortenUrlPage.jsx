@@ -1,15 +1,27 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import api from '../api/api'
 
 const ShortenUrlPage = () => {
     const { url } = useParams();
 
     useEffect(() => {
-        if (url) {
-            window.location.href = import.meta.env.VITE_BACKEND_URL + `/${url}`;
-        }
-    }, [url]);
-  return <p>Redirecting...</p>;
-}
+        const redirect = async () => {
+            try {
+                const { data } = await api.get(
+                    `/api/urls/public/redirect/${url}`
+                );
 
-export default ShortenUrlPage
+                window.location.href = data;
+            } catch (error) {
+                window.location.href = "/";
+            }
+        };
+
+        if (url) redirect();
+    }, [url]);
+
+    return <p>Redirecting...</p>;
+};
+
+export default ShortenUrlPage;

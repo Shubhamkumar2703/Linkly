@@ -33,7 +33,7 @@ const LandingPage = () => {
           <div className="mt-10 flex justify-center gap-4">
            
             <button
-              onClick={() => navigate("/ShortenUrlPage")}
+              onClick={() => navigate("/Dashboard")}
               className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold"
             >
               Shorten Your Link

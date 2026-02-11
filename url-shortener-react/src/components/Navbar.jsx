@@ -43,7 +43,7 @@ const Navbar = () => {
           {token && (
             <button
               onClick={logoutHandler}
-              className="bg-rose-500 px-4 py-2 rounded-md"
+              className="bg-rose-700 px-4 py-2 rounded-md shadow-md hover:bg-rose-800 transition-colors font-semibold"
             >
               Logout
             </button>

@@ -18,4 +18,4 @@ export const getSubDomain = (location) => {
     const isLocalhost = locationParts.slice(-1)[0] === "localhost";
     const sliceTill = isLocalhost ? -1 : -2;
     return locationParts.slice(0, sliceTill).join("");
-};
+}; 
