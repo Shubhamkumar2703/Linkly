@@ -30,6 +30,9 @@ const AboutPage = () => {
             <h3 className="font-semibold text-indigo-600">Why Linkly?</h3>
             <p className="text-slate-600 mt-2">
               Clean URLs, powerful analytics, and a developer-first backend.
+              <br />  
+
+             <p className="font-light text-black font-stretch-50%">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error repellat amet autem tenetur harum? Deleniti vitae laboriosam accusamus eveniet sequi dolor consectetur repellat, odit debitis autem, sint aliquam, eaque fuga?</p> 
             </p>
           </div>
         </div>

@@ -20,13 +20,14 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-linear-to-r from-indigo-950 to-violet-600">
       <div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold text-white italic">
-          Linkly
+          Linkly 
         </Link>
 
         <ul className={`sm:flex gap-8 items-center text-white font-medium
           ${open ? "absolute top-16 left-0 w-full bg-indigo-600 flex flex-col py-6" : "hidden sm:flex"}`}>
           <Link className={path === "/" ? "font-semibold" : ""} to="/">Home</Link>
           <Link className={path === "/about" ? "font-semibold" : ""} to="/about">About</Link>
+          <Link className={path === "/contact" ? "font-semibold" : ""} to="/contact">Contact</Link>
 
           {token && <Link to="/dashboard">Dashboard</Link>}
 

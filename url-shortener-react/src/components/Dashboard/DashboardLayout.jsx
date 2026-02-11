@@ -11,6 +11,8 @@ import {
   useFetchMyShortUrls,
   useFetchTotalClicks,
 } from "../../hooks/useQuery.js"; 
+import Footer from "../Footer.jsx";
+import Navbar from "../Navbar.jsx";
 
 const DashboardLayout = () => {
   const { token } = useStoreContext();
@@ -35,6 +37,8 @@ const DashboardLayout = () => {
   if (graphLoading) return <Loader />;
 
   return (
+    <div>
+      <Navbar />
     <div className="min-h-[calc(100vh-64px)] bg-slate-50 px-4 sm:px-8 lg:px-14 py-10">
       <div className="max-w-7xl mx-auto space-y-10">
 
@@ -102,7 +106,11 @@ const DashboardLayout = () => {
         setOpen={setShortenPopUp}
         refetch={refetch}
       />
+       
     </div>
+     <Footer />
+    </div>
+  
   );
 };
 
