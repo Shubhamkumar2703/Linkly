@@ -35,6 +35,18 @@ const ShortenItem = ({
     ""
   );
 
+  const fullShortUrl = `${import.meta.env.VITE_REACT_FRONT_END_URL}/s/${shortUrl}`;
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(fullShortUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch (err) {
+      console.error("Copy failed", err);
+    }
+  };
+
   const analyticsToggleHandler = () => {
     if (!showAnalytics) {
       setSelectedUrl(shortUrl);
@@ -46,13 +58,9 @@ const ShortenItem = ({
     setLoading(true);
     try {
       const { data } = await api.get(
-        `/api/urls/analytics/${selectedUrl}?startDate=2024-12-01T00:00:00&endDate=2025-12-31T23:59:59`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `/api/urls/analytics/${selectedUrl}?startDate=2024-12-01T00:00:00&endDate=2025-12-31T23:59:59`
       );
+
       setAnalyticsData(data);
       setSelectedUrl("");
     } catch (err) {
@@ -78,7 +86,7 @@ const ShortenItem = ({
           <div className="flex items-center gap-2 text-indigo-600 font-semibold">
             <Link
               target="_blank"
-              to={`${import.meta.env.VITE_REACT_FRONT_END_URL}/s/${shortUrl}`}
+              to={`/s/${shortUrl}`}
               className="hover:underline"
             >
               {domain}/s/{shortUrl}
@@ -110,18 +118,13 @@ const ShortenItem = ({
 
         {/* Actions */}
         <div className="flex items-center gap-3 sm:justify-end">
-          <CopyToClipboard
-            text={`${import.meta.env.VITE_REACT_FRONT_END_URL}/s/${shortUrl}`}
-            onCopy={() => {
-              setCopied(true);
-              setTimeout(() => setCopied(false), 1500);
-            }}
+          <button
+            onClick={handleCopy}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition"
           >
-            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition">
-              {copied ? "Copied" : "Copy"}
-              {copied ? <LiaCheckSolid /> : <IoCopy />}
-            </button>
-          </CopyToClipboard>
+            {copied ? "Copied" : "Copy"}
+            {copied ? <LiaCheckSolid /> : <IoCopy />}
+          </button>
 
           <button
             onClick={analyticsToggleHandler}

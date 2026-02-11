@@ -31,12 +31,15 @@ const LandingPage = () => {
           </p>
 
           <div className="mt-10 flex justify-center gap-4">
+           
             <button
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/ShortenUrlPage")}
               className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold"
             >
-              Start Free
-            </button>
+              Shorten Your Link
+             </button>
+          
+            
             <button
               onClick={() => navigate("/about")}
               className="border border-white px-6 py-3 rounded-lg"

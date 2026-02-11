@@ -3,7 +3,7 @@ import { FaGithub, FaLinkedin, FaVoicemail } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-slate-900 text-slate-400">
-      <div className="max-w-5xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-2">
+      <div className="max-w-5xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between self-center items-center gap-5">
         <p>© {new Date().getFullYear()} Linkly. All rights reserved by shubham kumar</p>
 
         <div className="flex gap-6 text-xl">

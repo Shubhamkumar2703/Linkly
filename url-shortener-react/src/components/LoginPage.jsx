@@ -26,20 +26,24 @@ const LoginPage = () => {
     mode: "onTouched",
   });
 
-  const loginHandler = async (data) => {
+  const loginHandler = async (formData) => {
     setLoader(true);
     try {
-      const { data: response } = await api.post(
+      const { data } = await api.post(
         "/api/auth/public/login",
-        data
+        formData
       );
 
-      setToken(response.token);
-      localStorage.setItem("JWT_TOKEN", JSON.stringify(response.token));
+      // ✅ STORE TOKEN CORRECTLY (NO JSON.stringify)
+      localStorage.setItem("JWT_TOKEN", data.token);
+
+      // ✅ Update context
+      setToken(data.token);
+
       toast.success("Welcome back to Linkly 👋");
 
       reset();
-      navigate("/Dashboard");
+      navigate("/dashboard"); // lowercase route
     } catch (error) {
       console.error(error);
       toast.error("Invalid credentials. Please try again.");
@@ -56,65 +60,64 @@ const LoginPage = () => {
           onSubmit={handleSubmit(loginHandler)}
           className="w-full max-w-md bg-white rounded-xl shadow-md p-8"
         >
-        {/* Heading */}
-        <h1 className="text-center text-3xl font-bold text-slate-900">
-          Login to Linkly
-        </h1>
-        <p className="text-center text-sm text-slate-600 mt-2">
-             Manage your links and view analytics
-        </p>
+          <h1 className="text-center text-3xl font-bold text-slate-900">
+            Login to Linkly
+          </h1>
 
-        {/* Fields */}
-        <div className="mt-8 flex flex-col gap-4">
-          <TextField
-            label="Username"
-            id="username"
-            type="text"
-            placeholder="Enter your username"
-            required
-            message="Username is required"
-            register={register}
-            errors={errors}
-          />
+          <p className="text-center text-sm text-slate-600 mt-2">
+            Manage your links and view analytics
+          </p>
 
-          <TextField
-            label="Password"
-            id="password"
-            type="password"
-            placeholder="Enter your password"
-            required
-            min={6}
-            message="Password is required"
-            register={register}
-            errors={errors}
-          />
-        </div>
+          <div className="mt-8 flex flex-col gap-4">
+            <TextField
+              label="Username"
+              id="username"
+              type="text"
+              placeholder="Enter your username"
+              required
+              message="Username is required"
+              register={register}
+              errors={errors}
+            />
 
-        {/* Button */}
-        <button
-          type="submit"
-          disabled={loader}
-          className={`w-full mt-6 py-2.5 rounded-lg font-semibold text-white transition
-            ${loader
-              ? "bg-indigo-400 cursor-not-allowed"
-              : "bg-indigo-600 hover:bg-indigo-700"}
-          `}
-        >
-          {loader ? "Signing in..." : "Sign in"}
-        </button>
+            <TextField
+              label="Password"
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              required
+              min={6}
+              message="Password is required"
+              register={register}
+              errors={errors}
+            />
+          </div>
 
-        {/* Footer */}
-        <p className="text-center text-sm text-slate-600 mt-6">
-          Don’t have an account?
-          <Link
-            to="/register"
-            className="ml-1 font-semibold text-indigo-600 hover:underline"
+          <button
+            type="submit"
+            disabled={loader}
+            className={`w-full mt-6 py-2.5 rounded-lg font-semibold text-white transition
+              ${
+                loader
+                  ? "bg-indigo-400 cursor-not-allowed"
+                  : "bg-indigo-600 hover:bg-indigo-700"
+              }
+            `}
           >
-            Create one
-          </Link>
-        </p>
-      </form>
-    </div>
+            {loader ? "Signing in..." : "Sign in"}
+          </button>
+
+          <p className="text-center text-sm text-slate-600 mt-6">
+            Don’t have an account?
+            <Link
+              to="/register"
+              className="ml-1 font-semibold text-indigo-600 hover:underline"
+            >
+              Create one
+            </Link>
+          </p>
+        </form>
+      </div>
     </>
   );
 };

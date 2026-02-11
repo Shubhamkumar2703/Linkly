@@ -6,10 +6,8 @@ import toast from "react-hot-toast";
 
 import api from "../../api/api";
 import TextField from "../TextField";
-import { useStoreContext } from "../../contextApi/ContextApi";
 
 const CreateNewShorten = ({ setOpen, refetch }) => {
-  const { token } = useStoreContext();
   const [loading, setLoading] = useState(false);
 
   const {
@@ -26,12 +24,10 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
 
   const createShortUrlHandler = async (formData) => {
     setLoading(true);
+
     try {
-      const { data } = await api.post("/api/urls/shorten", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // 🚀 NO MANUAL HEADERS HERE
+      const { data } = await api.post("/api/urls/shorten", formData);
 
       const shortLink = `${import.meta.env.VITE_REACT_FRONT_END_URL}/s/${data.shortUrl}`;
 
@@ -45,7 +41,7 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
       reset();
       setOpen(false);
     } catch (error) {
-      console.error(error);
+      console.error("Create short error:", error);
       toast.error("Failed to create short link");
     } finally {
       setLoading(false);
@@ -58,7 +54,6 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
         onSubmit={handleSubmit(createShortUrlHandler)}
         className="relative w-full max-w-md bg-white rounded-xl shadow-lg p-6"
       >
-        {/* Close */}
         {!loading && (
           <Tooltip title="Close">
             <button
@@ -71,10 +66,10 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
           </Tooltip>
         )}
 
-        {/* Header */}
         <h2 className="text-center text-2xl font-bold text-slate-900">
           Create a short link
         </h2>
+
         <p className="text-center text-sm text-slate-600 mt-1">
           Paste a long URL to generate a clean short link
         </p>
@@ -92,7 +87,6 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
           />
         </div>
 
-        {/* Action */}
         <button
           type="submit"
           disabled={loading}
