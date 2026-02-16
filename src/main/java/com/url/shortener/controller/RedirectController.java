@@ -12,19 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class RedirectController {
-    private UrlMappingService urlMappingService;
+
+    private final UrlMappingService urlMappingService;
 
     @GetMapping("/{shortUrl}")
-    public ResponseEntity<Void> redirect(@PathVariable String shortUrl){
-        UrlMapping urlMapping = urlMappingService.getOriginalUrl(shortUrl);
-        if(urlMapping != null){
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Location", urlMapping.getOriginalUrl());
-            return ResponseEntity.status(302).headers(httpHeaders).build();
+    public ResponseEntity<Void> redirect(@PathVariable String shortUrl) {
 
-        }
-        else {
+        UrlMapping urlMapping =
+                urlMappingService.getOriginalUrl(shortUrl);
+
+        if (urlMapping == null) {
             return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.status(302)
+                .header(HttpHeaders.LOCATION, urlMapping.getOriginalUrl())
+                .build();
     }
 }

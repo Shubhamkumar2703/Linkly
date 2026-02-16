@@ -16,25 +16,45 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  const linkStyle = (route) =>
+    `relative transition duration-300 hover:text-indigo-400 ${
+      path === route ? "text-indigo-400 font-semibold" : "text-white"
+    }`;
+
   return (
-    <header className="sticky top-0 z-50 bg-linear-to-r from-indigo-950 to-violet-600">
+    <header className="  sticky top-0 z-50
+  bg-gradient-to-r
+  from-indigo-900
+  via-indigo-900/80
+  to-indigo-900
+  backdrop-blur-xl
+  shadow-[0_4px_30px_rgba(79,70,229,0.25)]">
       <div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-white italic">
-          Linkly 
+
+        {/* Logo */}
+        <Link
+          to="/"
+          className="text-2xl font-bold text-white tracking-wide"
+        >
+          <span className="text-indigo-400">Link</span>ly
         </Link>
 
-        <ul className={`sm:flex gap-8 items-center text-white font-medium
-          ${open ? "absolute top-16 left-0 w-full bg-indigo-600 flex flex-col py-6" : "hidden sm:flex"}`}>
-          <Link className={path === "/" ? "font-semibold" : ""} to="/">Home</Link>
-          <Link className={path === "/about" ? "font-semibold" : ""} to="/about">About</Link>
-          <Link className={path === "/contact" ? "font-semibold" : ""} to="/contact">Contact</Link>
+        {/* Desktop Menu */}
+        <ul className="hidden sm:flex gap-8 items-center font-medium">
+          <Link className={linkStyle("/")} to="/">Home</Link>
+          <Link className={linkStyle("/about")} to="/about">About</Link>
+          <Link className={linkStyle("/contact")} to="/contact">Contact</Link>
 
-          {token && <Link to="/dashboard">Dashboard</Link>}
+          {token && (
+            <Link className={linkStyle("/dashboard")} to="/dashboard">
+              Dashboard
+            </Link>
+          )}
 
           {!token && (
             <Link
               to="/register"
-              className="bg-white text-indigo-600 px-4 py-2 rounded-md font-semibold"
+              className="bg-indigo-500 hover:bg-indigo-900 transition px-4 py-2 rounded-xl text-white shadow-md"
             >
               Sign Up
             </Link>
@@ -43,17 +63,66 @@ const Navbar = () => {
           {token && (
             <button
               onClick={logoutHandler}
-              className="bg-rose-700 px-4 py-2 rounded-md shadow-md hover:bg-rose-800 transition-colors font-semibold"
+              className="bg-rose-600 hover:bg-rose-700 transition px-4 py-2 rounded-xl text-white shadow-md"
             >
               Logout
             </button>
           )}
         </ul>
 
-        <button onClick={() => setOpen(!open)} className="sm:hidden text-white text-3xl">
+        {/* Mobile Toggle Button */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="sm:hidden text-white text-3xl"
+        >
           {open ? <RxCross2 /> : <IoIosMenu />}
         </button>
       </div>
+
+      {/* Mobile Dropdown */}
+      {open && (
+        <div className="sm:hidden bg-slate-900/95 backdrop-blur-xl border-t border-white/10">
+          <div className="flex flex-col items-center gap-6 py-6 font-medium">
+
+            <Link onClick={() => setOpen(false)} className={linkStyle("/")} to="/">Home</Link>
+            <Link onClick={() => setOpen(false)} className={linkStyle("/about")} to="/about">About</Link>
+            <Link onClick={() => setOpen(false)} className={linkStyle("/contact")} to="/contact">Contact</Link>
+
+            {token && (
+              <Link
+                onClick={() => setOpen(false)}
+                className={linkStyle("/dashboard")}
+                to="/dashboard"
+              >
+                Dashboard
+              </Link>
+            )}
+
+            {!token && (
+              <Link
+                onClick={() => setOpen(false)}
+                to="/register"
+                className="bg-indigo-500 hover:bg-indigo-600 transition px-4 py-2 rounded-xl text-white shadow-md"
+              >
+                Sign Up
+              </Link>
+            )}
+
+            {token && (
+              <button
+                onClick={() => {
+                  logoutHandler();
+                  setOpen(false);
+                }}
+                className="bg-rose-600 hover:bg-rose-700 transition px-4 py-2 rounded-xl text-white shadow-md"
+              >
+                Logout
+              </button>
+            )}
+
+          </div>
+        </div>
+      )}
     </header>
   );
 };

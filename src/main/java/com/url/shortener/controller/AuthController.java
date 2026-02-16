@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
@@ -30,7 +32,7 @@ public class AuthController {
         user.setEmail(registerRequest.getEmail());
         user.setRole("ROLE_USER");
         userService.registerUser(user);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(Map.of("message", "User registered successfully"));
 
     }
 }

@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PrivateRouter from "./PrivateRouter";
 import ErrorPage from "./components/ErrorPage";
+import ContactPage from "./components/ContactPage";
 
 const AppRouter = () => {
   return (
@@ -19,6 +20,8 @@ const AppRouter = () => {
       <Route path='/register' element={<PrivateRouter publicPage={true}><RegisterPage /></PrivateRouter>} />
       <Route path='/login' element={<PrivateRouter publicPage={true}><LoginPage /></PrivateRouter>} />
       <Route path='/dashboard' element={<PrivateRouter publicPage={false}><DashboardLayout /></PrivateRouter>} />
+      <Route path='/createnewurl' element={<PrivateRouter publicPage={false}><DashboardLayout /></PrivateRouter>} />
+      <Route path='/contact' element={<ContactPage />} />
       <Route path="*" element={<ErrorPage message="Page not found lol" />} />
     </Routes>
     

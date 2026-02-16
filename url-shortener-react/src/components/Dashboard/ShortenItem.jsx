@@ -9,7 +9,7 @@ import { IoCopy } from "react-icons/io5";
 import { LiaCheckSolid } from "react-icons/lia";
 import { MdAnalytics, MdOutlineAdsClick } from "react-icons/md";
 import { Hourglass } from "react-loader-spinner";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import api from "../../api/api";
 import { useStoreContext } from "../../contextApi/ContextApi";
@@ -84,13 +84,15 @@ const ShortenItem = ({
         {/* URL info */}
         <div className="flex-1 space-y-2 overflow-x-auto">
           <div className="flex items-center gap-2 text-indigo-600 font-semibold">
-            <Link
+            <a
+              href={`http://localhost:8080/${shortUrl}`}
               target="_blank"
-              to={`/s/${shortUrl}`}
+              rel="noopener noreferrer"
               className="hover:underline"
             >
-              {domain}/s/{shortUrl}
-            </Link>
+              {`http://localhost:8080/${shortUrl}`}
+            </a>
+
             <FaExternalLinkAlt className="text-sm" />
           </div>
 

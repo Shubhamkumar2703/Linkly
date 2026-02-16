@@ -7,7 +7,6 @@ import com.url.shortener.repository.UserRepository;
 import com.url.shortener.security.jwt.JwtAuthenticationResponse;
 import com.url.shortener.security.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.net.Authenticator;
 
 @Service
 @AllArgsConstructor
@@ -41,8 +39,10 @@ public class UserService {
 
     public JwtAuthenticationResponse authenticateUser(LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-                        loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         String jwt = jwtUtils.generateToken(userDetails);

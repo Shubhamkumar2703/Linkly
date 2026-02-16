@@ -10,6 +10,7 @@ import com.url.shortener.repository.UrlMappingRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -52,7 +53,7 @@ public class UrlMappingService {
     private String generateShortUrl(){
         String characters = "ABCDEFGHIJKLMNOPQSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
         StringBuilder shortUrl = new StringBuilder(8);
 
         for(int i = 0; i < 8; i++){
