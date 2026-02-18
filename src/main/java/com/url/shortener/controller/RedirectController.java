@@ -17,6 +17,7 @@ public class RedirectController {
 
     @GetMapping("/{shortUrl}")
     public ResponseEntity<Void> redirect(@PathVariable String shortUrl) {
+        System.out.println("Redirect called for: " + shortUrl);
 
         UrlMapping urlMapping =
                 urlMappingService.getOriginalUrl(shortUrl);

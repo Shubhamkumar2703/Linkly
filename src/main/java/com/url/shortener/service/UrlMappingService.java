@@ -7,6 +7,7 @@ import com.url.shortener.models.UrlMapping;
 import com.url.shortener.models.User;
 import com.url.shortener.repository.ClickEventRepository;
 import com.url.shortener.repository.UrlMappingRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +97,7 @@ public class UrlMappingService {
                 .collect(Collectors.groupingBy(click -> click.getClickDate().toLocalDate(), Collectors.counting()));
 
     }
-
+    @Transactional
     public UrlMapping getOriginalUrl(String shortUrl) {
         UrlMapping urlMapping = urlMappingRepository.findByShortUrl(shortUrl);
         if(urlMapping != null){

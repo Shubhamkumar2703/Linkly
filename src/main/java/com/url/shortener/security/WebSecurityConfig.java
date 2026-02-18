@@ -62,6 +62,7 @@ public class WebSecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/{shortUrl}").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/s/**").permitAll()
                         .requestMatchers("/api/urls/**").authenticated()
