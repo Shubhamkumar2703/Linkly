@@ -15,6 +15,7 @@ import api from "../../api/api";
 import { useStoreContext } from "../../contextApi/ContextApi";
 import Graph from "./Graph";
 
+
 const ShortenItem = ({
   originalUrl,
   shortUrl,
@@ -30,12 +31,12 @@ const ShortenItem = ({
   const [selectedUrl, setSelectedUrl] = useState("");
   const [analyticsData, setAnalyticsData] = useState([]);
 
-  const domain = import.meta.env.VITE_REACT_FRONT_END_URL.replace(
-    /^https?:\/\//,
-    ""
-  );
+  const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-  const fullShortUrl = `${import.meta.env.VITE_REACT_FRONT_END_URL}/s/${shortUrl}`;
+const domain = BACKEND_BASE_URL.replace(/^https?:\/\//, "");
+
+const fullShortUrl = `${BACKEND_BASE_URL}/${shortUrl}`;
+
 
   const handleCopy = async () => {
     try {
@@ -55,21 +56,30 @@ const ShortenItem = ({
   };
 
   const fetchAnalytics = async () => {
-    setLoading(true);
-    try {
-      const { data } = await api.get(
-        `/api/urls/analytics/${selectedUrl}?startDate=2024-12-01T00:00:00&endDate=2025-12-31T23:59:59`
-      );
+  setLoading(true);
 
-      setAnalyticsData(data);
-      setSelectedUrl("");
-    } catch (err) {
-      console.error(err);
-      navigate("/error");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const start = dayjs()
+      .startOf("2020")
+      .format("2020-01-01T00:00:00");
+
+    const end = dayjs()
+      .endOf("2030")
+      .format("2030-12-31T23:59:59");
+
+  try {
+    const { data } = await api.get(
+      `/api/urls/analytics/${selectedUrl}?startDate=${start}&endDate=${end}`
+    );
+
+    setAnalyticsData(data);
+    setSelectedUrl("");
+  } catch (err) {
+    console.error(err);
+    navigate("/error", { state: { message: "Failed to fetch analytics data. Please try again later." } });
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     if (selectedUrl) fetchAnalytics();
