@@ -95,12 +95,12 @@ const fullShortUrl = `${BACKEND_BASE_URL}/${shortUrl}`;
         <div className="flex-1 space-y-2 overflow-x-auto">
           <div className="flex items-center gap-2 text-indigo-600 font-semibold">
             <a
-              href={`http://localhost:8080/${shortUrl}`}
+              href={fullShortUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline"
             >
-              {`http://localhost:8080/${shortUrl}`}
+              {fullShortUrl}
             </a>
 
             <FaExternalLinkAlt className="text-sm" />
