@@ -1,20 +1,27 @@
-# Use a lightweight OpenJDK 18 base image
-# eclipse-temurin is a trusted OpenJDK distribution
-# alpine makes the image smaller in size
-FROM eclipse-temurin:18-jdk-alpine
+# -------- STAGE 1: Build --------
+FROM maven:3.9.6-eclipse-temurin-18-alpine AS build
 
-# Set working directory inside the container
-# All commands will run inside /app
 WORKDIR /app
 
-# Copy the generated jar file from your local target folder
-# Rename it to app.jar inside the container
-COPY target/url-shortener-sb-0.0.1-SNAPSHOT.jar app.jar
+# Copy pom.xml first (for caching dependencies)
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Tell Docker that the container will run on port 8080
-# (Spring Boot default port)
+# Copy source code
+COPY src ./src
+
+# Build jar
+RUN mvn clean package -DskipTests
+
+
+# -------- STAGE 2: Run --------
+FROM eclipse-temurin:18-jdk-alpine
+
+WORKDIR /app
+
+# Copy jar from build stage
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8080
 
-# Command that runs when container starts
-# This runs your Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
