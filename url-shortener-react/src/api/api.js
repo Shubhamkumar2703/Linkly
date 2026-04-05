@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
-  timeout: 10000,
+  timeout: 50000,
 });
 
 api.interceptors.request.use(
@@ -12,9 +12,8 @@ api.interceptors.request.use(
     if (token) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
-      console.log("Attached Token:", token); // 👈 DEBUG
     } else {
-      console.log("No token found");
+      // console.log("No token found");
     }
 
     return config;
